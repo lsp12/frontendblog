@@ -50,7 +50,7 @@ export const AppBarComponent = () => {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            Logout
+            Cerrar sesion
           </MenuItem>
         </Menu>
       </Grid>

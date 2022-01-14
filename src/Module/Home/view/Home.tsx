@@ -37,7 +37,7 @@ export const Home = () => {
       </Grid>
 
       {data.map(( id ) => (
-        <Grid key={id} item xs={12} md={12}>
+        <Grid key={id} item xs={12} md={6}>
           <CardComp />
         </Grid>
       ))}
