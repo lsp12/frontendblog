@@ -8,6 +8,7 @@ import { MyPost } from '../Module/myPost/view/MyPost';
 import User from '../Module/User/User';
 import { Layout } from '../shared/Components/Layout/Layout';
 import { Home } from '../Module/Home/view/Home';
+import { ViewPost } from '../Module/viewPost/view/ViewPost';
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const AppRouter = () => (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path=":id" element={<ViewPost />} />
         <Route path="/mypost" element={<MyPost />} />
         <Route path="/profile" element={<User />} />
         <Route path="*" element={<h1> no existe</h1>} />
