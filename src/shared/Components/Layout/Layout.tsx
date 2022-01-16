@@ -4,12 +4,13 @@ import {
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Outlet } from 'react-router-dom';
 import { AppBarComponent } from '../AppBar/AppBar';
 import { SideBar } from '../SideBar/SideBar';
 
 interface ILayout{
   window?: () => Window;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const Layout = ({ window, children }:ILayout ) => {
@@ -22,7 +23,7 @@ export const Layout = ({ window, children }:ILayout ) => {
   const handleDrawerToggle = () => {
     setMobileOpen( !mobileOpen );
   };
-
+  console.log( children );
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -83,8 +84,7 @@ export const Layout = ({ window, children }:ILayout ) => {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        {children}
-
+        <Outlet />
       </Box>
     </Box>
   );

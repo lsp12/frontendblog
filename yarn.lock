@@ -1920,6 +1920,11 @@
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
 
+"@types/js-cookie@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-3.0.1.tgz#04aa743e2e0a85a22ee9aa61f6591a8bc19b5d68"
+  integrity sha512-7wg/8gfHltklehP+oyJnZrz9XBuX5ZPP4zB6UsI84utdlkRYLnOm2HfpLXazTwZA+fpGn0ir8tGNgVnMEleBGQ==
+
 "@types/json-schema@*", "@types/json-schema@^7.0.4", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.8", "@types/json-schema@^7.0.9":
   version "7.0.9"
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.9.tgz"
@@ -2636,6 +2641,13 @@ axe-core@^4.3.5:
   version "4.3.5"
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.3.5.tgz"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
+
+axios@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
+  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
+  dependencies:
+    follow-redirects "^1.14.4"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -4522,7 +4534,7 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.4.tgz"
   integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
-follow-redirects@^1.0.0:
+follow-redirects@^1.0.0, follow-redirects@^1.14.4:
   version "1.14.7"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.14.7.tgz"
   integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
@@ -5750,6 +5762,11 @@ jest@^27.4.3:
     import-local "^3.0.2"
     jest-cli "^27.4.7"
 
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -6189,6 +6206,11 @@ mkdirp@^0.5.5, mkdirp@~0.5.1:
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   dependencies:
     minimist "^1.2.5"
+
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
 ms@2.0.0:
   version "2.0.0"

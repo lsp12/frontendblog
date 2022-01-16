@@ -3,6 +3,7 @@ import * as yup from 'yup';
 export const schemaRegister = yup.object().shape({
   nombre: yup.string().required( 'El nombre es requerido' ),
   email: yup.string().email( 'El email no es válido' ).required( 'El email es requerido' ),
+  position: yup.string().required( 'el cargo es requerida' ),
   password: yup.string().required( 'La contraseña es requerida' ),
   confirmPassword: yup.string().oneOf([yup.ref( 'password' ), null], 'Las contraseñas no coinciden' ),
 });
@@ -18,5 +19,5 @@ export const schemaPost = yup.object().shape({
 });
 
 export const schemaComment = yup.object().shape({
-  body: yup.string().required( 'El cuerpo es requerido' ),
+  comment: yup.string().required( 'El cuerpo es requerido' ),
 });

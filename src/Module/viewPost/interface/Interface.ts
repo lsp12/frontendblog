@@ -1,3 +1,5 @@
 export interface ICreateComment {
-  body: string;
+  id?: string;
+  comment: string;
+  createdAt?: Date;
 }

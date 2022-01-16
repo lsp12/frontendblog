@@ -1,19 +1,31 @@
 import {
-  Box, Button, Card, CardActions, CardContent, Grid, Typography,
+  Box, Button, Card, CardActions, CardContent, CircularProgress, Grid, Typography,
 } from '@mui/material';
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { openComents, openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
+import { getComentsController } from '../../../shared/Store/ActionConments/Conments.reducer';
+import { getPostController } from '../../../shared/Store/ActionPost/Post.reducer';
 import { useAppDispatch, useAppSelector } from '../../../shared/Store/Hook';
 import { Comments } from '../Components/Comments/Comments';
-import { MyComent } from '../Components/MyComent/MyComent';
+import { CreateComent } from '../Components/MyComent/CreateComent';
 
 export const ViewPost = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { comments } = useAppSelector(( state ) => state.appSlice );
-  const { crearComent } = useAppSelector(( state ) => state.appSlice );
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { comments, crearComent } = useAppSelector(( state ) => state.appSlice );
+  const { coments, loading } = useAppSelector(( state ) => state.comentsSlice );
+  const { post } = useAppSelector(( state ) => state.postSlice );
+
+  useEffect(() => {
+    if ( params.id ) {
+      dispatch( getPostController( params.id ));
+      dispatch( getComentsController( params.id ));
+    } else {
+      console.log( 'no hay id' );
+    }
+  }, []);
 
   return (
     <Grid
@@ -27,26 +39,24 @@ export const ViewPost = () => {
           <CardContent>
             <Box>
               <Typography variant="subtitle2">
-                date the post was created
+                {moment( post?.createdAt ).locale( 'es-mx' ).format( 'MMMM Do YYYY, h:mm:ss a' )}
               </Typography>
             </Box>
             <Box>
               <Typography variant="h2">
-                titulo de la publicacion
+                {post?.title}
               </Typography>
             </Box>
             <Box>
               <Typography variant="subtitle1">
-                author
+                {post?.userid.nameUser}
               </Typography>
             </Box>
             <Box>
               <Typography variant="body1">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, sunt repellat. Ea, voluptate ad debitis nemo perspiciatis deleniti repellendus facilis mollitia vel cumque recusandae blanditiis earum, quo, iste hic corporis.
+                {post?.body}
               </Typography>
             </Box>
-            {' '}
-            {params.id}
           </CardContent>
           <CardActions>
             <Button onClick={() => {
@@ -66,15 +76,30 @@ export const ViewPost = () => {
       </Grid>
       {crearComent && (
         <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
-          <MyComent />
+          {post?._id && (
+            <CreateComent postBlogId={post?._id} />
+          )}
         </Grid>
       )}
-      {comments && (
-        data.map(( id ) => (
-          <Grid key={id} item xs={12} md={12} sx={{ pt: '1em' }}>
-            <Comments />
-          </Grid>
-        ))
+      {loading ? (
+        <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <CircularProgress />
+          </Box>
+        </Grid>
+      ) : (
+        comments && (
+          coments.length > 0 ? ( coments.map(( Data, index ) => (
+            <Grid key={index.toString()} item xs={12} md={12} sx={{ pt: '1em' }}>
+              <Comments Data={Data} />
+            </Grid>
+          ))
+          ) : (
+            <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
+              <p>Nadie a comentado aun</p>
+            </Grid>
+          )
+        )
       )}
 
     </Grid>

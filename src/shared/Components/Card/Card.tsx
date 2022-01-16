@@ -4,16 +4,18 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../Store/Hook';
-import { DeleteModalReducer, openModal, setPost } from '../../Store/ActionApp/app.slice';
+import { DeleteModalReducer, openModal } from '../../Store/ActionApp/app.slice';
+import { IPost } from '../../Interface/rest.interface';
 
 interface ICardProps {
   profile?:boolean;
-  id:string | number;
+  data:IPost
 }
 
-export const CardComp = ({ profile, id }:ICardProps ) => {
-  const Navigate = useNavigate();
+export const CardComp = ({ profile, data }:ICardProps ) => {
+  const navigate = useNavigate();
   const { modalOpen, openDeleteModal } = useAppSelector(( state ) => state.appSlice );
   const dispatch = useAppDispatch();
   return (
@@ -22,28 +24,21 @@ export const CardComp = ({ profile, id }:ICardProps ) => {
 
     >
       <CardActionArea>
-        {/*  <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      /> */}
         <CardContent onClick={() => {
-          Navigate( `/${id}` );
+          navigate( `/card/${data._id}` );
         }}
         >
           <Typography gutterBottom variant="h5" component="div">
-            Green iguana
+            {data.title}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary" component="b">
-            author
+            {data.userid.nameUser}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {data.body}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary" component="b">
-            date
+            {moment( data?.createdAt ).locale( 'es-mx' ).format( 'MMMM Do YYYY, h:mm:ss a' )}
           </Typography>
         </CardContent>
 
@@ -54,7 +49,7 @@ export const CardComp = ({ profile, id }:ICardProps ) => {
             size="small"
             color="primary"
             onClick={() => {
-              Navigate( `/${id}` );
+              navigate( `/card/${data._id}` );
             }}
           >
             Ver publicacion
@@ -64,7 +59,7 @@ export const CardComp = ({ profile, id }:ICardProps ) => {
             size="small"
             color="primary"
             onClick={() => {
-              dispatch( setPost({ id: id.toString(), title: 'title', body: 'body' }));
+              /* dispatch( setPost({ id: id.toString(), title: 'title', body: 'body' })); */
               dispatch( openModal( !modalOpen ));
             }}
           >

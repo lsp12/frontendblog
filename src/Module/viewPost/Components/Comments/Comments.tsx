@@ -2,19 +2,23 @@ import {
   Button,
   Card, CardActions, CardContent, Typography,
 } from '@mui/material';
+import moment from 'moment';
 import React from 'react';
+import { ICreateComment } from '../../interface/Interface';
 
-export const Comments = () => {
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  console.log( data );
+interface ICreateCommentProps {
+  Data: ICreateComment;
+}
+export const Comments = ({ Data }:ICreateCommentProps ) => {
+  const { comment, createdAt } = Data;
   return (
     <Card sx={{ boxShadow: 5 }}>
       <CardContent>
         <Typography variant="subtitle1">
-          {Date.now()}
+          {moment( createdAt ).locale( 'es-mx' ).format( 'MMMM Do YYYY, h:mm:ss a' )}
         </Typography>
         <Typography variant="body2">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, sunt repellat. Ea, voluptate ad debitis nemo perspiciatis deleniti repellendus facilis mollitia vel cumque recusandae blanditiis earum, quo, iste hic corporis.
+          {comment}
         </Typography>
         <Typography variant="body2">
           author

@@ -6,6 +6,8 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { RegisterReducer } from '../../../shared/Store/ActionAuth/Auth.reducer';
+import { useAppDispatch } from '../../../shared/Store/Hook';
 import { schemaRegister } from '../../../shared/Yup/Yup';
 import { IRegister } from '../interface/interface';
 
@@ -16,6 +18,7 @@ interface State {
 }
 
 export const Register = () => {
+  const dispatch = useAppDispatch();
   const [values, setValues] = React.useState<State>({
     password: '',
     confirmPassword: '',
@@ -40,12 +43,15 @@ export const Register = () => {
       email: '',
       password: '',
       confirmPassword: '',
+      position: '',
     },
     validationSchema: schemaRegister,
     onSubmit: ({
-      nombre, email, password, confirmPassword,
+      nombre, email, password, confirmPassword, position,
     }) => {
-      console.log( nombre, email, password, confirmPassword );
+      dispatch( RegisterReducer({
+        nombre, email, password, confirmPassword, position,
+      }));
       resetForm();
     },
   });
@@ -85,6 +91,17 @@ export const Register = () => {
                 {...getFieldProps( 'nombre' )}
                 error={!!errors.nombre && touched.nombre}
                 helperText={touched.nombre && errors.nombre}
+              />
+            </Grid>
+            <Grid item xs={12} md={12} sx={{ pt: '1em', pb: '1em' }}>
+              <TextField
+                fullWidth
+                label="Cargo"
+                type="text"
+                autoComplete="text"
+                {...getFieldProps( 'position' )}
+                error={!!errors.position && touched.position}
+                helperText={touched.position && errors.position}
               />
             </Grid>
             <Grid item xs={12} md={12} sx={{ pt: '1em', pb: '1em' }}>

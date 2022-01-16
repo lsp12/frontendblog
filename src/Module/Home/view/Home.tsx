@@ -1,20 +1,32 @@
 import {
   Box,
-  FormControl, Grid, Input, InputAdornment, InputLabel,
+  FormControl, Grid, Input, InputAdornment, InputLabel, Skeleton,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import Cookies from 'js-cookie';
 import { CardComp } from '../../../shared/Components/Card/Card';
 import { SpeedDialComp } from '../../../shared/Components/SpeedDial/SpeedDial';
 import FormDialog from '../../../shared/Components/modal/Modal';
 import { FormCreatePost } from '../../../shared/Components/Form/Form';
 import { useAppDispatch, useAppSelector } from '../../../shared/Store/Hook';
 import { openModal } from '../../../shared/Store/ActionApp/app.slice';
+import { getPosts } from '../../../shared/Store/ActionPost/Post.reducer';
 
 export const Home = () => {
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { modalOpen } = useAppSelector(( state ) => state.appSlice );
+  const { posts, loading } = useAppSelector(( state ) => state.postSlice );
+  const { authethicated } = useAppSelector(( state ) => state.authSlice );
+  const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const dispatch = useAppDispatch();
+  const token = Cookies.get( 'token' );
+  useEffect(() => {
+    if ( token !== undefined ) {
+      dispatch( getPosts( token ));
+      console.log( 'token', token );
+    }
+  }, [token, authethicated, dispatch]);
+
   return (
     <Grid
       container
@@ -48,9 +60,15 @@ export const Home = () => {
           </FormDialog>
         </Box>
       </Grid>
-      {data.map(( id ) => (
-        <Grid key={id} item xs={12} md={6}>
-          <CardComp id={id} />
+      {loading && (
+        skeleton.map(( Data ) => (
+          <Grid key={Data} item xs={12} md={6}>
+            <Skeleton variant="rectangular" width="100%" height={200} />
+          </Grid>
+        )))}
+      {posts && posts.length > 0 && posts.map(( Data ) => (
+        <Grid key={Data.title} item xs={12} md={6}>
+          <CardComp data={Data} />
         </Grid>
       ))}
       <SpeedDialComp />
