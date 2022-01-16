@@ -6,6 +6,8 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { loginReducer } from '../../../shared/Store/ActionAuth/Auth.reducer';
+import { useAppDispatch } from '../../../shared/Store/Hook';
 import { schemaLogin } from '../../../shared/Yup/Yup';
 import { ILogin } from '../interface/Interface';
 
@@ -15,6 +17,7 @@ interface State {
 }
 
 export const Login = () => {
+  const dispatch = useAppDispatch();
   const [values, setValues] = React.useState<State>({
     password: '',
     showPassword: false,
@@ -41,7 +44,7 @@ export const Login = () => {
     onSubmit: ({
       email, password,
     }) => {
-      console.log( email, password );
+      dispatch( loginReducer({ email, password }));
       resetForm();
     },
   });
@@ -80,7 +83,7 @@ export const Login = () => {
               <Grid item xs={12} md={12}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+
                     <TextField
                       id="input-with-sx"
                       fullWidth
@@ -89,6 +92,14 @@ export const Login = () => {
                       {...getFieldProps( 'email' )}
                       error={!!errors.email && touched.email}
                       helperText={touched.email && errors.email}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                          </InputAdornment>
+                        ),
+                      }}
+
                     />
                   </Box>
                   <Box sx={{ mt: '1em' }}>
