@@ -36,8 +36,10 @@ const authSlice = createSlice({
     builder.addCase( loginReducer.pending, ( state ) => {
       state.authethicated = false;
     })
-      .addCase( loginReducer.fulfilled, ( state ) => {
-        state.authethicated = true;
+      .addCase( loginReducer.fulfilled, ( state, action ) => {
+        if ( action.payload === true ) {
+          state.authethicated = true;
+        }
       });
     builder
       .addCase( userReducer.fulfilled, ( state, action ) => {

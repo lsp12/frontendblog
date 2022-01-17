@@ -13,9 +13,13 @@ export const loginReducer = createAsyncThunk( 'Auth/login',
     try {
       const res = await login( data.email, data.password );
       Cookies.set( 'token', res );
-      return res;
+      toast.success( 'logueado correctamente' );
+      return true;
     } catch ( error:any ) {
       const { ...rest } = error;
+      if ( rest.response.data.message === 'Password not valid' ) {
+        toast.error( 'contraseña incorrecta' );
+      }
       console.log( rest );
     }
   });
@@ -32,6 +36,8 @@ export const RegisterReducer = createAsyncThunk( 'Auth/Register',
       if ( rest.response.data.message === 'Email already exist' ) {
         toast.error( 'Correo electronico ya se encuentra registrado intenta con otro' );
       }
+      console.log( rest );
+      toast.error( 'Error' );
     }
   });
 
