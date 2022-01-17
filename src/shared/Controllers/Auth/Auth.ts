@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { IRegister } from '../../../Module/Register/interface/interface';
 import { IUsers } from '../../Interface/rest.interface';
 
-const api = 'http://localhost:4000';
+const api = 'https://blogsumifru.herokuapp.com/';
 /* 61df6cf7aacfbd4c3d36b085 */
 export const login = async ( email:string, password:string ):Promise<any> => {
   const res = await axios.get( `${api}/users/login/${email}/${password}` );
