@@ -5,11 +5,12 @@ export interface IPost{
   userid:IUsers;
   conmment?: [];
   createdAt: Date;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface IUsers{
   _id?: string;
+  urlImage?: string;
   email: string;
   nameUser?: string;
   position?: string;
@@ -23,4 +24,15 @@ export interface IComent{
 
 export interface ICreatePost extends IComent {
   postBlogId: string;
+}
+
+export interface IGetComent extends IComent {
+  postBlogId: string;
+  userId: IUsers;
+  createdAt: Date;
+}
+export interface IUpdatePost {
+  _id?: string;
+  title: string;
+  body: string;
 }

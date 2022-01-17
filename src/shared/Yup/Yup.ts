@@ -14,6 +14,7 @@ export const schemaLogin = yup.object().shape({
 });
 
 export const schemaPost = yup.object().shape({
+  id: yup.string(),
   title: yup.string().required( 'El título es requerido' ),
   body: yup.string().required( 'El cuerpo es requerido' ),
 });

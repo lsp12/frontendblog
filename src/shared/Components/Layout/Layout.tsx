@@ -10,10 +10,9 @@ import { SideBar } from '../SideBar/SideBar';
 
 interface ILayout{
   window?: () => Window;
-  children?: React.ReactNode;
 }
 
-export const Layout = ({ window, children }:ILayout ) => {
+export const Layout = ({ window }:ILayout ) => {
   const drawerWidth = 240;
 
   const [mobileOpen, setMobileOpen] = React.useState( false );
@@ -23,7 +22,6 @@ export const Layout = ({ window, children }:ILayout ) => {
   const handleDrawerToggle = () => {
     setMobileOpen( !mobileOpen );
   };
-  console.log( children );
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

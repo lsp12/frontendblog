@@ -5,9 +5,9 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RegisterReducer } from '../../../shared/Store/ActionAuth/Auth.reducer';
-import { useAppDispatch } from '../../../shared/Store/Hook';
+import { useAppDispatch, useAppSelector } from '../../../shared/Store/Hook';
 import { schemaRegister } from '../../../shared/Yup/Yup';
 import { IRegister } from '../interface/interface';
 
@@ -19,6 +19,14 @@ interface State {
 
 export const Register = () => {
   const dispatch = useAppDispatch();
+  const { register } = useAppSelector(( state ) => state.authSlice );
+
+  const navigate = useNavigate();
+
+  if ( register ) {
+    navigate( '/login' );
+  }
+
   const [values, setValues] = React.useState<State>({
     password: '',
     confirmPassword: '',
@@ -46,12 +54,13 @@ export const Register = () => {
       position: '',
     },
     validationSchema: schemaRegister,
-    onSubmit: ({
+    onSubmit: async ({
       nombre, email, password, confirmPassword, position,
     }) => {
-      dispatch( RegisterReducer({
+      await dispatch( RegisterReducer({
         nombre, email, password, confirmPassword, position,
       }));
+      /* const res = a.payload.response.data.message; */
       resetForm();
     },
   });
@@ -79,7 +88,7 @@ export const Register = () => {
               sx={{ pt: '1em', pb: '1em' }}
             >
               <Typography variant="h6">
-                register
+                Registro
               </Typography>
             </Grid>
             <Grid item xs={12} md={12} sx={{ pt: '1em', pb: '1em' }}>

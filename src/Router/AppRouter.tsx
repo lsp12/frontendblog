@@ -4,6 +4,7 @@ import React from 'react';
 import {
   BrowserRouter, Navigate, Route, Routes,
 } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { Login } from '../Module/Login/view/Login';
 import { Register } from '../Module/Register/view/Register';
 import { MyPost } from '../Module/myPost/view/MyPost';
@@ -15,13 +16,13 @@ import { useAppSelector } from '../shared/Store/Hook';
 
 const AppRouter = () => {
   const { authethicated } = useAppSelector(( state ) => state.authSlice );
-
+  const token = Cookies.get( 'token' );
   return (
     <BrowserRouter>
 
       {/* <Layout> */}
       <Routes>
-        {authethicated === false ? (
+        {authethicated === false && token === undefined ? (
           <>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />

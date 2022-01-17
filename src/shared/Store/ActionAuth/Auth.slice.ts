@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { loginReducer, RegisterReducer } from './Auth.reducer';
+import { IUsers } from '../../Interface/rest.interface';
+import { loginReducer, RegisterReducer, userReducer } from './Auth.reducer';
 
 interface IAuthSlice {
   register: boolean;
   token: string | null;
   authethicated: boolean;
+  dataUser?:IUsers | null;
 }
 
 const initialState: IAuthSlice = {
@@ -26,21 +28,44 @@ const authSlice = createSlice({
         state.authethicated = false;
       }
     },
+    singOut: ( state ) => {
+      state.authethicated = false;
+    },
   },
   extraReducers: ( builder ) => {
-    builder.addCase( RegisterReducer.fulfilled, ( state ) => {
-      state.register = true;
-    });
     builder.addCase( loginReducer.pending, ( state ) => {
       state.authethicated = false;
     })
       .addCase( loginReducer.fulfilled, ( state ) => {
         state.authethicated = true;
       });
+    builder
+      .addCase( userReducer.fulfilled, ( state, action ) => {
+        state.dataUser = action.payload!;
+        if ( state.dataUser ) {
+          state.authethicated = true;
+        } else {
+          state.authethicated = false;
+        }
+      });
+    builder
+      .addCase( RegisterReducer.pending, ( state ) => {
+        state.register = false;
+      })
+      .addCase( RegisterReducer.fulfilled, ( state, action ) => {
+        if ( action.payload === undefined ) {
+          state.register = false;
+        } else {
+          state.register = true;
+        }
+      })
+      .addCase( RegisterReducer.rejected, ( state ) => {
+        state.register = false;
+      });
   },
 });
 
 export const {
-  getToken,
+  getToken, singOut,
 } = authSlice.actions;
 export default authSlice.reducer;

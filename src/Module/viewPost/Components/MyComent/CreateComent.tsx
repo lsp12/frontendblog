@@ -28,7 +28,6 @@ export const CreateComent = ({ postBlogId }:IComentProps ) => {
     onSubmit: ({
       comment,
     }) => {
-      console.log( comment );
       dispatch( openCrearComent( !crearComent ));
       const coment: ICreatePost = {
         comment,

@@ -4,15 +4,21 @@ import {
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import * as React from 'react';
 import { Logout } from '@mui/icons-material';
+import Cookies from 'js-cookie';
+import { singOut } from '../../Store/ActionAuth/Auth.slice';
+import { useAppDispatch } from '../../Store/Hook';
 
 export const AppBarComponent = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>( null );
+  const dispatch = useAppDispatch();
   const open = Boolean( anchorEl );
   const handleClick = ( event: React.MouseEvent<HTMLButtonElement> ) => {
     setAnchorEl( event.currentTarget );
   };
   const handleClose = () => {
     setAnchorEl( null );
+    Cookies.remove( 'token' );
+    dispatch( singOut());
   };
   return (
     <Grid

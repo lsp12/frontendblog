@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IPost } from '../../Interface/rest.interface';
-import { getPostController, getPosts } from './Post.reducer';
+import { getPostController, getPosts, myPostController } from './Post.reducer';
 
 interface IPostSlice{
   posts: IPost[];
   loading: boolean;
   post?: IPost;
+  myPosts?: IPost[];
 }
 
 const initialState:IPostSlice = {
@@ -38,6 +39,14 @@ const postSlice = createSlice({
         state.loading = false;
       })
       .addCase( getPostController.rejected, ( state ) => {
+        state.loading = false;
+      });
+    builder
+      .addCase( myPostController.pending, ( state ) => {
+        state.loading = true;
+      })
+      .addCase( myPostController.fulfilled, ( state, action ) => {
+        state.myPosts = action.payload!;
         state.loading = false;
       });
   },

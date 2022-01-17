@@ -1,5 +1,7 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { IRegister } from '../../../Module/Register/interface/interface';
+import { IUsers } from '../../Interface/rest.interface';
 
 const api = 'http://localhost:4000';
 /* 61df6cf7aacfbd4c3d36b085 */
@@ -19,6 +21,15 @@ export const register = async ( data:IRegister ):Promise<any> => {
     password,
     position,
   });
-  console.log( res );
+  return res.data;
+};
+
+export const onlyUser = async ():Promise<IUsers> => {
+  const token = Cookies.get( 'token' );
+  const res = await axios.get( `${api}/users/onlyuser`, {
+    headers: {
+      Authorization: `${token}`,
+    },
+  });
   return res.data;
 };

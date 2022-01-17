@@ -15,15 +15,13 @@ export const ViewPost = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
   const { comments, crearComent } = useAppSelector(( state ) => state.appSlice );
-  const { coments, loading } = useAppSelector(( state ) => state.comentsSlice );
+  const { getComents, loading } = useAppSelector(( state ) => state.comentsSlice );
   const { post } = useAppSelector(( state ) => state.postSlice );
 
   useEffect(() => {
     if ( params.id ) {
       dispatch( getPostController( params.id ));
       dispatch( getComentsController( params.id ));
-    } else {
-      console.log( 'no hay id' );
     }
   }, []);
 
@@ -89,7 +87,7 @@ export const ViewPost = () => {
         </Grid>
       ) : (
         comments && (
-          coments.length > 0 ? ( coments.map(( Data, index ) => (
+          getComents && getComents.length > 0 ? ( getComents.map(( Data, index ) => (
             <Grid key={index.toString()} item xs={12} md={12} sx={{ pt: '1em' }}>
               <Comments Data={Data} />
             </Grid>

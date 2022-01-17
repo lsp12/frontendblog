@@ -9,6 +9,7 @@ import { ICreatePost } from '../../../Module/Home/interface/interface';
 import { openModal } from '../../Store/ActionApp/app.slice';
 import { useAppDispatch, useAppSelector } from '../../Store/Hook';
 import useInitialFormState from '../../Hooks/useInitialState';
+import { createPostController, UpdatePostController } from '../../Store/ActionPost/Post.reducer';
 
 export const FormCreatePost = () => {
   const { modalOpen } = useAppSelector(( state ) => state.appSlice );
@@ -26,9 +27,13 @@ export const FormCreatePost = () => {
     onSubmit: ({
       title, body, id,
     }) => {
-      console.log( title, body, id );
-
+      if ( id !== '' ) {
+        dispatch( UpdatePostController({ _id: id, title, body }));
+      } else {
+        dispatch( createPostController({ title, body }));
+      }
       resetForm();
+      handleClose();
     },
   });
   return (
@@ -62,7 +67,7 @@ export const FormCreatePost = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Descartar</Button>
-        <Button type="submit" onClick={handleClose}>Agregar</Button>
+        <Button type="submit">Agregar</Button>
       </DialogActions>
     </form>
   );

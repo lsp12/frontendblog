@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IComent } from '../../Interface/rest.interface';
-import { createComentController, getComentsController } from './Conments.reducer';
+import { IComent, IGetComent } from '../../Interface/rest.interface';
+import { getComentsController } from './Conments.reducer';
 
 interface IComentsSlice{
   coments: IComent[];
   loading: boolean;
+  getComents: IGetComent[];
 }
 
 const initialState: IComentsSlice = {
   coments: [],
   loading: false,
+  getComents: [],
 };
 
 const comentsSlice = createSlice({
@@ -22,16 +24,12 @@ const comentsSlice = createSlice({
         state.loading = true;
       })
       .addCase( getComentsController.fulfilled, ( state, action ) => {
-        state.coments = action.payload!;
+        state.getComents = action.payload!;
         state.loading = false;
       })
       .addCase( getComentsController.rejected, ( state ) => {
-        state.coments = [];
+        state.getComents = [];
         state.loading = false;
-      });
-    builder
-      .addCase( createComentController.fulfilled, ( state, action ) => {
-        state.coments.unshift( action.payload! );
       });
   },
 });
