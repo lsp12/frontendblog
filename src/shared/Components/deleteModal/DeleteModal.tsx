@@ -25,8 +25,8 @@ export const DeleteModal = ({ id, title }:DeleteModalProps ) => {
         {title}
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => dispatch( DeleteModalReducer( !openDeleteModal ))}>Disagree</Button>
-        <Button onClick={() => DeletePost()}>Agree</Button>
+        <Button onClick={() => dispatch( DeleteModalReducer( !openDeleteModal ))}>Cancelar</Button>
+        <Button onClick={() => DeletePost()}>Eliminar</Button>
       </DialogActions>
     </>
   );

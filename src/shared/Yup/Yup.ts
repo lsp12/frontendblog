@@ -22,3 +22,11 @@ export const schemaPost = yup.object().shape({
 export const schemaComment = yup.object().shape({
   comment: yup.string().required( 'El cuerpo es requerido' ),
 });
+
+export const schemaSearch = yup.object().shape({
+  title: yup.string(),
+});
+
+export const schemaPurbe = yup.object().shape({
+  body: yup.string().required( 'El cuerpo es requerido' ),
+});

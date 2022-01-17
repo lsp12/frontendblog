@@ -3,3 +3,7 @@ export interface ICreateComment {
   comment: string;
   createdAt?: Date;
 }
+
+export interface Ipru{
+  body: string;
+}

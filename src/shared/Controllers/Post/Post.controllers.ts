@@ -3,7 +3,8 @@ import Cookies from 'js-cookie';
 import { ICreatePost } from '../../../Module/Home/interface/interface';
 import { IPost, IUpdatePost } from '../../Interface/rest.interface';
 
-const api = 'https://blogsumifru.herokuapp.com';
+/* const api = 'https://blogsumifru.herokuapp.com'; */
+const api = 'http://localhost:4000';
 
 export const getPostAll = async ( ):Promise<IPost[]> => {
   const token = Cookies.get( 'token' );
@@ -67,6 +68,16 @@ export const updatePost = async ( data:IUpdatePost ) => {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      authorization: `${token}`,
+    },
+  });
+  return res.data;
+};
+
+export const findByEmailOrNameOrTitle = async ( data:string ) => {
+  const token = Cookies.get( 'token' );
+  const res = await axios.get( `${api}/post-blog/${data}/title`, {
+    headers: {
       authorization: `${token}`,
     },
   });

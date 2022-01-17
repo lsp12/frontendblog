@@ -1,21 +1,23 @@
 import {
-  Box, Button, Card, CardActions, CardContent, CircularProgress, Grid, Typography,
+  Box, Button, Card, CardActions, CardContent, Grid, Typography,
 } from '@mui/material';
+import { useFormik } from 'formik';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { openComents, openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
+import { openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
 import { getComentsController } from '../../../shared/Store/ActionConments/Conments.reducer';
 import { getPostController } from '../../../shared/Store/ActionPost/Post.reducer';
 import { useAppDispatch, useAppSelector } from '../../../shared/Store/Hook';
-import { Comments } from '../Components/Comments/Comments';
+import { schemaPurbe } from '../../../shared/Yup/Yup';
 import { CreateComent } from '../Components/MyComent/CreateComent';
+import { Ipru } from '../interface/Interface';
 
 export const ViewPost = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { comments, crearComent } = useAppSelector(( state ) => state.appSlice );
-  const { getComents, loading } = useAppSelector(( state ) => state.comentsSlice );
+  const { crearComent } = useAppSelector(( state ) => state.appSlice );
+  /* const { getComents, loading } = useAppSelector(( state ) => state.comentsSlice ); */
   const { post } = useAppSelector(( state ) => state.postSlice );
 
   useEffect(() => {
@@ -23,7 +25,23 @@ export const ViewPost = () => {
       dispatch( getPostController( params.id ));
       dispatch( getComentsController( params.id ));
     }
-  }, []);
+  }, [dispatch, params.id]);
+
+  const {
+    getFieldProps, handleSubmit, resetForm,
+  } = useFormik<Ipru>({
+    initialValues: {
+      body: '',
+    },
+    validationSchema: schemaPurbe,
+    onSubmit: ({
+      body,
+    }) => {
+      console.log( body );
+      /* dispatch( loginReducer({ email, password })); */
+      resetForm();
+    },
+  });
 
   return (
     <Grid
@@ -58,16 +76,10 @@ export const ViewPost = () => {
           </CardContent>
           <CardActions>
             <Button onClick={() => {
-              dispatch( openComents( !comments ));
-            }}
-            >
-              Cargar Comentarios
-            </Button>
-            <Button onClick={() => {
               dispatch( openCrearComent( !crearComent ));
             }}
             >
-              Escribir un comentario
+              escribir una refelxion
             </Button>
           </CardActions>
         </Card>
@@ -79,14 +91,14 @@ export const ViewPost = () => {
           )}
         </Grid>
       )}
-      {loading ? (
+      {/* loading ? (
         <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
           <Box display="flex" justifyContent="center" alignItems="center">
             <CircularProgress />
           </Box>
         </Grid>
       ) : (
-        comments && (
+        true && (
           getComents && getComents.length > 0 ? ( getComents.map(( Data, index ) => (
             <Grid key={index.toString()} item xs={12} md={12} sx={{ pt: '1em' }}>
               <Comments Data={Data} />
@@ -98,8 +110,23 @@ export const ViewPost = () => {
             </Grid>
           )
         )
-      )}
-
+      ) */}
+      <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="true"
+        >
+          Essay:
+          <textarea {...getFieldProps( 'body' )} />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Enviar
+          </Button>
+        </form>
+      </Grid>
     </Grid>
   );
 };

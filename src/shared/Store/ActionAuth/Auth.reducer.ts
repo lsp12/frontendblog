@@ -18,10 +18,21 @@ export const loginReducer = createAsyncThunk( 'Auth/login',
       return true;
     } catch ( error:any ) {
       const { ...rest } = error;
-      if ( rest.response.data.message === 'Password not valid' ) {
-        toast.error( 'contraseña incorrecta' );
+      switch ( rest.response.data.message ) {
+        case 'Password not valid':
+          toast.error( 'Contraseña no valida' );
+          break;
+        case 'Not Found':
+          toast.error( 'Usuario no encontrado' );
+          break;
+        case 'User not found':
+          toast.error( 'Usuario no encontrado' );
+          break;
+        default:
+          toast.error( 'Error inesperado' );
       }
       console.log( rest );
+      return false;
     }
   });
 
