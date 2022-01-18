@@ -1,20 +1,22 @@
 import {
-  Box, Button, Card, CardActions, CardContent, CircularProgress, Grid, Typography,
+  Box, Button, Card, CardContent, CircularProgress, Grid, Typography,
 } from '@mui/material';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { openComents, openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
+import ShareIcon from '@mui/icons-material/Share';
+import { toast } from 'react-toastify';
+import { openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
 import { getComentsController } from '../../../shared/Store/ActionConments/Conments.reducer';
 import { getPostController } from '../../../shared/Store/ActionPost/Post.reducer';
 import { useAppDispatch, useAppSelector } from '../../../shared/Store/Hook';
 import { Comments } from '../Components/Comments/Comments';
-import { CreateComent } from '../Components/MyComent/CreateComent';
+import { CreateComentState } from '../Components/MyComent/CreateComentState';
 
 export const ViewPost = () => {
   const params = useParams();
   const dispatch = useAppDispatch();
-  const { comments, crearComent } = useAppSelector(( state ) => state.appSlice );
+  const { crearComent } = useAppSelector(( state ) => state.appSlice );
   const { getComents, loading } = useAppSelector(( state ) => state.comentsSlice );
   const { post } = useAppSelector(( state ) => state.postSlice );
 
@@ -23,7 +25,7 @@ export const ViewPost = () => {
       dispatch( getPostController( params.id ));
       dispatch( getComentsController( params.id ));
     }
-  }, []);
+  }, [dispatch, params.id]);
 
   return (
     <Grid
@@ -56,26 +58,29 @@ export const ViewPost = () => {
               </Typography>
             </Box>
           </CardContent>
-          <CardActions>
-            <Button onClick={() => {
-              dispatch( openComents( !comments ));
-            }}
-            >
-              Cargar Comentarios
-            </Button>
+
+          <Box maxWidth="100%" display="flex" justifyContent="space-between" p="1em">
             <Button onClick={() => {
               dispatch( openCrearComent( !crearComent ));
             }}
             >
-              Escribir un comentario
+              escribir una refelxion
             </Button>
-          </CardActions>
+            <Button onClick={() => {
+              navigator.clipboard.writeText( window.location.href );
+              toast.info( 'se copio en su portapapeles' );
+            }}
+            >
+              <ShareIcon />
+            </Button>
+          </Box>
+
         </Card>
       </Grid>
       {crearComent && (
         <Grid item xs={12} md={12} sx={{ pt: '1em' }}>
           {post?._id && (
-            <CreateComent postBlogId={post?._id} />
+            <CreateComentState postBlogId={post?._id} />
           )}
         </Grid>
       )}
@@ -86,7 +91,7 @@ export const ViewPost = () => {
           </Box>
         </Grid>
       ) : (
-        comments && (
+        true && (
           getComents && getComents.length > 0 ? ( getComents.map(( Data, index ) => (
             <Grid key={index.toString()} item xs={12} md={12} sx={{ pt: '1em' }}>
               <Comments Data={Data} />
@@ -99,7 +104,6 @@ export const ViewPost = () => {
           )
         )
       )}
-
     </Grid>
   );
 };

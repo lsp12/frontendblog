@@ -38,6 +38,9 @@ const appSlice = createSlice({
     setPost: ( state, action:PayloadAction<IPost> ) => {
       state.post = action.payload;
     },
+    setDeletePost: ( state, action:PayloadAction<IPost> ) => {
+      state.post = action.payload;
+    },
   },
 });
 

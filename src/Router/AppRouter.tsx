@@ -22,25 +22,25 @@ const AppRouter = () => {
 
       {/* <Layout> */}
       <Routes>
-        {authethicated === false && token === undefined ? (
+        {authethicated === false && token === undefined && (
           <>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="*" element={<Navigate to="login" />} />
           </>
-        ) : (
-          <>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="card/:id" element={<ViewPost />} />
+        ) }
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          {authethicated === true && token !== undefined && (
+            <>
               <Route path="/mypost" element={<MyPost />} />
               <Route path="/profile" element={<User />} />
               <Route path="*" element={<Navigate to="/" />} />
-            </Route>
-            <Route path="*" element={<Navigate to="/" />} />
-          </>
-        )}
+            </>
 
+          )}
+          <Route path="card/:id" element={<ViewPost />} />
+        </Route>
       </Routes>
       {/* </Layout> */}
 

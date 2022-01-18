@@ -3,3 +3,7 @@ export interface ICreatePost {
   title: string;
   body: string;
 }
+
+export interface ISearchPost {
+  title: string;
+}

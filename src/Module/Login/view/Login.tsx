@@ -10,6 +10,7 @@ import { loginReducer } from '../../../shared/Store/ActionAuth/Auth.reducer';
 import { useAppDispatch } from '../../../shared/Store/Hook';
 import { schemaLogin } from '../../../shared/Yup/Yup';
 import { ILogin } from '../interface/Interface';
+import logoSumifru from '../../../assets/Image/logoSumifru.png';
 
 interface State {
   password: string;
@@ -71,7 +72,7 @@ export const Login = () => {
                 <CardMedia
                   component="img"
                   height="194"
-                  image="https://www.banabiosa.com/wp-content/uploads/2021/06/Ripen_unripen_bananas-1-scaled.jpg"
+                  image={logoSumifru}
                   alt="logo banan"
                 />
               </Grid>

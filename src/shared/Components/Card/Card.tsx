@@ -35,9 +35,21 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
               {data.title}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" component="b">
+              Por:
+              {' '}
               {data.userid.nameUser}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              display="-webkit-box"
+              sx={{
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: 2,
+              }}
+            >
               {data.body}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary" component="b">
@@ -82,6 +94,16 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
               size="small"
               color="primary"
               onClick={() => {
+                dispatch( setPost(
+                  {
+                    _id: data._id,
+                    title: data.title,
+                    body: data.body,
+                    createdAt: data.createdAt,
+                    userid: data.userid,
+
+                  },
+                ));
                 dispatch( DeleteModalReducer( !openDeleteModal ));
               }}
             >

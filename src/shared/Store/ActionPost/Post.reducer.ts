@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
 import { ICreatePost } from '../../../Module/Home/interface/interface';
-
 import {
-  createPost, deletePost, getPost, getPostAll, myPost, updatePost,
+  createPost, deletePost, findByEmailOrNameOrTitle, getPost, getPostAll, myPost, updatePost,
 } from '../../Controllers/Post/Post.controllers';
 import { IPost, IUpdatePost } from '../../Interface/rest.interface';
 import { getToken } from '../ActionAuth/Auth.slice';
@@ -97,5 +97,30 @@ export const UpdatePostController = createAsyncThunk( 'Post/updatePost',
         Cookies.remove( 'token' );
         dispatch( getToken( ));
       }
+    }
+  });
+
+export const SearchPostController = createAsyncThunk( 'Post/searchPost',
+  async ( search:string, { dispatch }) => {
+    try {
+      const res = await findByEmailOrNameOrTitle( search );
+      toast.success( 'Resultados encontrados' );
+      return res as unknown as IPost[];
+    } catch ( e:any ) {
+      const { ...rest } = e;
+      switch ( rest.response.data.message ) {
+        case 'Token not valid':
+          toast.error( 'Token not valid' );
+          Cookies.remove( 'token' );
+          dispatch( getToken( ));
+          break;
+        case 'PostBlog not found':
+          toast.error( 'publicacion no encontrada' );
+          break;
+        default:
+          toast.error( 'Error' );
+          break;
+      }
+      console.log( e );
     }
   });
