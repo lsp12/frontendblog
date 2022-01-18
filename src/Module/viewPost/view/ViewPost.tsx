@@ -1,9 +1,11 @@
 import {
-  Box, Button, Card, CardActions, CardContent, CircularProgress, Grid, Typography,
+  Box, Button, Card, CardContent, CircularProgress, Grid, Typography,
 } from '@mui/material';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ShareIcon from '@mui/icons-material/Share';
+import { toast } from 'react-toastify';
 import { openCrearComent } from '../../../shared/Store/ActionApp/app.slice';
 import { getComentsController } from '../../../shared/Store/ActionConments/Conments.reducer';
 import { getPostController } from '../../../shared/Store/ActionPost/Post.reducer';
@@ -56,14 +58,23 @@ export const ViewPost = () => {
               </Typography>
             </Box>
           </CardContent>
-          <CardActions>
+
+          <Box maxWidth="100%" display="flex" justifyContent="space-between" p="1em">
             <Button onClick={() => {
               dispatch( openCrearComent( !crearComent ));
             }}
             >
               escribir una refelxion
             </Button>
-          </CardActions>
+            <Button onClick={() => {
+              navigator.clipboard.writeText( window.location.href );
+              toast.info( 'se copio en su portapapeles' );
+            }}
+            >
+              <ShareIcon />
+            </Button>
+          </Box>
+
         </Card>
       </Grid>
       {crearComent && (

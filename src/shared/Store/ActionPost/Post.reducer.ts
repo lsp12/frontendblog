@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { ICreatePost } from '../../../Module/Home/interface/interface';
-
 import {
   createPost, deletePost, findByEmailOrNameOrTitle, getPost, getPostAll, myPost, updatePost,
 } from '../../Controllers/Post/Post.controllers';

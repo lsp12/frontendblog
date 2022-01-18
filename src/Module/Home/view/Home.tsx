@@ -17,9 +17,7 @@ export const Home = () => {
   const dispatch = useAppDispatch();
   const token = Cookies.get( 'token' );
   useEffect(() => {
-    if ( token !== undefined ) {
-      dispatch( getPosts());
-    }
+    dispatch( getPosts());
   }, [token, authethicated, dispatch]);
 
   return (

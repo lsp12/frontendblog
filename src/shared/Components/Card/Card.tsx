@@ -94,6 +94,16 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
               size="small"
               color="primary"
               onClick={() => {
+                dispatch( setPost(
+                  {
+                    _id: data._id,
+                    title: data.title,
+                    body: data.body,
+                    createdAt: data.createdAt,
+                    userid: data.userid,
+
+                  },
+                ));
                 dispatch( DeleteModalReducer( !openDeleteModal ));
               }}
             >
