@@ -30,14 +30,12 @@ const AppRouter = () => {
           </>
         ) }
         <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
           {authethicated === true && token !== undefined && (
             <>
-
-              <Route index element={<Home />} />
               <Route path="/mypost" element={<MyPost />} />
               <Route path="/profile" element={<User />} />
               <Route path="*" element={<Navigate to="/" />} />
-
             </>
 
           )}
