@@ -5,5 +5,5 @@ export interface ICreateComment {
 }
 
 export interface Ipru{
-  body: string;
+  comment: string;
 }
