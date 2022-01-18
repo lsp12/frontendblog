@@ -37,30 +37,33 @@ export const FormSearch = () => {
   });
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        autoComplete="true"
-      >
-        <FormControl variant="standard">
-          <InputLabel htmlFor="input-with-icon-adornment">
-            Buscar una publicacion
-          </InputLabel>
-          <Input
-            id="input-with-icon-adornment"
-            fullWidth
-            {...getFieldProps( 'title' )}
-            error={!!errors.title && touched.title}
-            startAdornment={(
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            )}
-          />
-        </FormControl>
-        <FormHelperText error={!!errors.title && touched.title}>
-          {touched.title && errors.title}
-        </FormHelperText>
-      </form>
+      {!searchExit && (
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="true"
+        >
+          <FormControl variant="standard">
+            <InputLabel htmlFor="input-with-icon-adornment">
+              Buscar una publicacion
+            </InputLabel>
+            <Input
+              id="input-with-icon-adornment"
+              fullWidth
+              {...getFieldProps( 'title' )}
+              error={!!errors.title && touched.title}
+              startAdornment={(
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              )}
+            />
+          </FormControl>
+          <FormHelperText error={!!errors.title && touched.title}>
+            {touched.title && errors.title}
+          </FormHelperText>
+        </form>
+      )}
+
       {searchExit && (
         <Button onClick={() => {
           resetForm();
