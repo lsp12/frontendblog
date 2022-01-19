@@ -2,8 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { ICreatePost, IGetComent } from '../../Interface/rest.interface';
 
-/* const api = 'https://blogsumifru.herokuapp.com'; */
-const api = 'http://localhost:4000';
+const api = 'https://blogsumifru.herokuapp.com';
+/* const api = 'http://localhost:4000'; */
 
 export const getConments = async ( id:string ):Promise<IGetComent[]> => {
   const token = Cookies.get( 'token' );
