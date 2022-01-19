@@ -7,6 +7,7 @@ interface IState {
   comments: boolean;
   crearComent: boolean;
   post?: IPost;
+
 }
 
 const initialState:IState = {
@@ -44,6 +45,7 @@ const appSlice = createSlice({
     setDeletePost: ( state, action:PayloadAction<IPost> ) => {
       state.post = action.payload;
     },
+
   },
 });
 

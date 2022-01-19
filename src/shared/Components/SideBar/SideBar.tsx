@@ -43,6 +43,14 @@ export const SideBar = () => {
           )}
 
           <Grid item xs={12} md={12}>
+            <NavLink to="/range" style={{ textDecoration: 'none', color: 'rgb(230,44,53)' }}>
+              <Typography variant="body1">
+                Busca publicaciones por filtro
+              </Typography>
+            </NavLink>
+          </Grid>
+
+          <Grid item xs={12} md={12}>
             <NavLink to="/profile" style={{ textDecoration: 'none', color: 'rgb(230,44,53)' }}>
               <Typography variant="body1">
                 Mi cuenta

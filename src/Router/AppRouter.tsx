@@ -13,6 +13,7 @@ import { Layout } from '../shared/Components/Layout/Layout';
 import { Home } from '../Module/Home/view/Home';
 import { ViewPost } from '../Module/viewPost/view/ViewPost';
 import { useAppSelector } from '../shared/Store/Hook';
+import { PostRange } from '../Module/PostRander/view/PostRange';
 
 const AppRouter = () => {
   const { authethicated } = useAppSelector(( state ) => state.authSlice );
@@ -31,6 +32,7 @@ const AppRouter = () => {
         ) }
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="/range" element={<PostRange />} />
           {authethicated === true && token !== undefined && (
             <>
               <Route path="/mypost" element={<MyPost />} />

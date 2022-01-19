@@ -4,8 +4,8 @@ import Cookies from 'js-cookie';
 import { IRegister } from '../../../Module/Register/interface/interface';
 import { IUsers } from '../../Interface/rest.interface';
 
-const api = 'https://blogsumifru.herokuapp.com';
-/* const api = 'http://localhost:4000'; */
+/* const api = 'https://blogsumifru.herokuapp.com'; */
+const api = 'http://localhost:4000';
 
 export const login = async ( email:string, password:string ):Promise<any> => {
   const res = await axios.get( `${api}/users/login/${email}/${password}` );
