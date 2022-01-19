@@ -19,6 +19,7 @@ export const ViewPost = () => {
   const { crearComent } = useAppSelector(( state ) => state.appSlice );
   const { getComents, loading } = useAppSelector(( state ) => state.comentsSlice );
   const { post } = useAppSelector(( state ) => state.postSlice );
+  const { authethicated } = useAppSelector(( state ) => state.authSlice );
 
   useEffect(() => {
     if ( params.id ) {
@@ -26,6 +27,26 @@ export const ViewPost = () => {
       dispatch( getComentsController( params.id ));
     }
   }, [dispatch, params.id]);
+
+  const stringToHtml = ( string: string | undefined ) => {
+    let reading = false;
+    if ( !reading ) {
+      reading = true;
+      const parse = Range.prototype.createContextualFragment.bind( document.createRange());
+      const body = document.getElementById( `${post?._id}-coment` );
+      if ( body ) {
+        if ( body.childNodes.length <= 0 ) {
+          if ( string ) {
+            body.appendChild( parse( string ));
+          }
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    stringToHtml( post?.body );
+  }, [post?.body, post?._id]);
 
   return (
     <Grid
@@ -53,19 +74,23 @@ export const ViewPost = () => {
               </Typography>
             </Box>
             <Box>
-              <Typography variant="body1">
-                {post?.body}
-              </Typography>
+              <div id={`${post?._id}-coment`} />
+              {stringToHtml( post?.body )}
             </Box>
           </CardContent>
 
           <Box maxWidth="100%" display="flex" justifyContent="space-between" p="1em">
-            <Button onClick={() => {
-              dispatch( openCrearComent( !crearComent ));
-            }}
-            >
-              escribir una refelxion
-            </Button>
+            {authethicated ? (
+              <Button onClick={() => {
+                dispatch( openCrearComent( !crearComent ));
+              }}
+              >
+                escribir una refelxion
+              </Button>
+            ) : (
+              <Box />
+            )}
+
             <Button onClick={() => {
               navigator.clipboard.writeText( window.location.href );
               toast.info( 'se copio en su portapapeles' );

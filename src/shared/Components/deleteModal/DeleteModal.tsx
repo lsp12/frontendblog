@@ -5,14 +5,8 @@ import { DeleteModalReducer } from '../../Store/ActionApp/app.slice';
 import { deletePostController } from '../../Store/ActionPost/Post.reducer';
 import { useAppDispatch, useAppSelector } from '../../Store/Hook';
 
-interface DeleteModalProps {
-  id: string;
-  title: string;
-}
-
-export const DeleteModal = ({ id, title }:DeleteModalProps ) => {
+export const DeleteModal = ( ) => {
   const { openDeleteModal } = useAppSelector(( state ) => state.appSlice );
-  console.log( 'DeleteModal', id, title );
   const data = useInitialFormState();
   const dispatch = useAppDispatch();
   const DeletePost = () => {

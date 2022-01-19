@@ -34,6 +34,9 @@ const appSlice = createSlice({
     },
     DeleteModalReducer: ( state, action:PayloadAction<boolean> ) => {
       state.openDeleteModal = action.payload;
+      if ( action.payload === false ) {
+        state.post = undefined;
+      }
     },
     setPost: ( state, action:PayloadAction<IPost> ) => {
       state.post = action.payload;

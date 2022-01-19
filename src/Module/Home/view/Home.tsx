@@ -43,7 +43,10 @@ export const Home = () => {
           <CardComp data={Data} />
         </Grid>
       ))}
-      <SpeedDialComp />
+      {authethicated && (
+        <SpeedDialComp />
+      )}
+
     </Grid>
 
   );

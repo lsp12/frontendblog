@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import {
-  Button, DialogActions, DialogContent, TextField,
+  Button, ButtonGroup, DialogActions, DialogContent, TextField,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { schemaPost } from '../../Yup/Yup';
@@ -19,7 +19,7 @@ export const FormCreatePost = () => {
   };
 
   const {
-    getFieldProps, handleSubmit, resetForm, errors, touched,
+    getFieldProps, handleSubmit, resetForm, errors, touched, setFieldValue, values,
   } = useFormik<ICreatePost>({
     initialValues: useInitialFormState(),
     enableReinitialize: true,
@@ -36,6 +36,58 @@ export const FormCreatePost = () => {
       handleClose();
     },
   });
+
+  const handleSelect = ( CrearComent:string, element:string | undefined ) => {
+    /* const element = window.getSelection()?.toString(); */
+    switch ( CrearComent ) {
+      case 'B':
+        if ( element ) {
+          const text = values.body;
+          console.log( text );
+          setFieldValue( 'body', text.replace( element, `<b>${element.trim()}</b> ` ));
+        }
+        break;
+      case 'I':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<i>${element.trim()}</i> ` ));
+        }
+        break;
+      case 'U':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<u>${element.trim()}</u> ` ));
+        }
+        break;
+      case 'S':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<s>${element.trim()}</s> ` ));
+        }
+        break;
+      case 'A':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<a href="${element.trim()}" target="_blank" rel="noreferrer">click aqui</a> ` ));
+        }
+        break;
+      case 'code':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<code>${element.trim()}</code> ` ));
+        }
+        break;
+      case 'cita':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<blockquote>${element.trim()}</blockquote> ` ));
+        }
+        break;
+      default:
+        return '';
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -51,7 +103,7 @@ export const FormCreatePost = () => {
             helperText={touched.title && errors.title}
           />
         </Box>
-
+        {/* <a href="https://www.youtube.com/watch?v=xcV81QKYPnY" target="_blank" rel="noreferrer" /> */}
         <Box pt="1em">
           <TextField
             id="outlined-multiline-flexible"
@@ -64,6 +116,30 @@ export const FormCreatePost = () => {
             helperText={touched.body && errors.body}
           />
         </Box>
+        <ButtonGroup variant="outlined">
+          <Button onClick={() => handleSelect( 'B', window.getSelection()?.toString())}>
+            <b>B</b>
+          </Button>
+          <Button onClick={() => handleSelect( 'I', window.getSelection()?.toString())}>
+            <i>C</i>
+          </Button>
+          <Button onClick={() => handleSelect( 'U', window.getSelection()?.toString())}>
+            <u>U</u>
+          </Button>
+          <Button onClick={() => handleSelect( 'S', window.getSelection()?.toString())}>
+            <s>S</s>
+          </Button>
+          <Button onClick={() => handleSelect( 'A', window.getSelection()?.toString())}>
+            Link
+          </Button>
+          <Button onClick={() => handleSelect( 'code', window.getSelection()?.toString())}>
+            <code>html</code>
+          </Button>
+          <Button onClick={() => handleSelect( 'cita', window.getSelection()?.toString())}>
+            citar
+            {/* <blockquote>citar</blockquote> */}
+          </Button>
+        </ButtonGroup>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Descartar</Button>

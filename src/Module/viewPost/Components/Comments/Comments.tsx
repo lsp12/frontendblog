@@ -21,7 +21,6 @@ export const Comments = ({ Data }:ICreateCommentProps ) => {
   const dispatch = useAppDispatch();
 
   const stringToHtml = ( string: string ) => {
-    console.log( 'me imprimi' );
     let reading = false;
     if ( !reading ) {
       reading = true;

@@ -8,8 +8,8 @@ import moment from 'moment';
 import { useAppDispatch, useAppSelector } from '../../Store/Hook';
 import { DeleteModalReducer, openModal, setPost } from '../../Store/ActionApp/app.slice';
 import { IPost } from '../../Interface/rest.interface';
-import FormDialog from '../modal/Modal';
-import { DeleteModal } from '../deleteModal/DeleteModal';
+/* import FormDialog from '../modal/Modal';
+import { DeleteModal } from '../deleteModal/DeleteModal'; */
 
 interface ICardProps {
   profile?:boolean;
@@ -20,6 +20,12 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
   const navigate = useNavigate();
   const { modalOpen, openDeleteModal } = useAppSelector(( state ) => state.appSlice );
   const dispatch = useAppDispatch();
+  const stringToHtml = ( string:string ) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString( string, 'text/html' );
+    return doc.body.textContent || '';
+  };
+
   return (
     <>
       <Card
@@ -50,7 +56,8 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
                 WebkitLineClamp: 2,
               }}
             >
-              {data.body}
+
+              {stringToHtml( data.body )}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary" component="b">
               {moment( data?.createdAt ).locale( 'es-mx' ).format( 'MMMM Do YYYY, h:mm:ss a' )}
@@ -113,15 +120,15 @@ export const CardComp = ({ profile, data }:ICardProps ) => {
         )}
       </Card>
 
-      {data._id && (
+      {/* data._id && (
         <FormDialog
           open={openDeleteModal}
           closeFunction={() => dispatch( DeleteModalReducer( !openDeleteModal ))}
           title="Eliminar publicacion"
         >
-          <DeleteModal id={data._id} title={data.title} />
+          <DeleteModal />
         </FormDialog>
-      )}
+      ) */}
 
     </>
   );
