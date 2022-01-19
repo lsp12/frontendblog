@@ -4,8 +4,8 @@ import { ICreatePost } from '../../../Module/Home/interface/interface';
 import { IPostRange } from '../../../Module/PostRander/Interface/Interface';
 import { IPost, IUpdatePost } from '../../Interface/rest.interface';
 
-/* const api = 'https://blogsumifru.herokuapp.com'; */
-const api = 'http://localhost:4000';
+const api = 'https://blogsumifru.herokuapp.com';
+/* const api = 'http://localhost:4000'; */
 
 export const getPostAll = async ( ):Promise<IPost[]> => {
   const token = Cookies.get( 'token' );
