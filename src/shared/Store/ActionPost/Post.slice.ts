@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IPostRange } from '../../../Module/PostRander/Interface/Interface';
 import { IPost } from '../../Interface/rest.interface';
 import {
-  getPostController, getPosts, myPostController, SearchPostController,
+  getPostController, getPostRangeController, getPosts, myPostController, SearchPostController,
 } from './Post.reducer';
 
 interface IPostSlice{
@@ -10,6 +11,7 @@ interface IPostSlice{
   post?: IPost;
   myPosts?: IPost[];
   searchExit: boolean;
+  date?:IPostRange;
 }
 
 const initialState:IPostSlice = {
@@ -24,6 +26,9 @@ const postSlice = createSlice({
   reducers: {
     closeSearch: ( state ) => {
       state.searchExit = false;
+    },
+    getRangeDate: ( state, action:PayloadAction<IPostRange> ) => {
+      state.date = action.payload;
     },
   },
   extraReducers: ( builder ) => {
@@ -68,10 +73,17 @@ const postSlice = createSlice({
           state.searchExit = true;
         }
       });
+    builder
+      .addCase( getPostRangeController.pending, ( state ) => {
+        state.loading = true;
+      })
+      .addCase( getPostRangeController.fulfilled, ( state, action ) => {
+        state.posts = action.payload!;
+      });
   },
 
 });
 
-export const { closeSearch } = postSlice.actions;
+export const { closeSearch, getRangeDate } = postSlice.actions;
 
 export default postSlice.reducer;

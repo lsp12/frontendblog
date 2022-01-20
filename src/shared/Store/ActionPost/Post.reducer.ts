@@ -2,8 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { ICreatePost } from '../../../Module/Home/interface/interface';
+import { IPostRange } from '../../../Module/PostRander/Interface/Interface';
 import {
-  createPost, deletePost, findByEmailOrNameOrTitle, getPost, getPostAll, myPost, updatePost,
+  createPost, deletePost, findByEmailOrNameOrTitle, findForRangeDate, getPost, getPostAll, myPost, updatePost,
 } from '../../Controllers/Post/Post.controllers';
 import { IPost, IUpdatePost } from '../../Interface/rest.interface';
 import { getToken } from '../ActionAuth/Auth.slice';
@@ -122,5 +123,20 @@ export const SearchPostController = createAsyncThunk( 'Post/searchPost',
           break;
       }
       console.log( e );
+    }
+  });
+
+export const getPostRangeController = createAsyncThunk( 'Post/getPostRange',
+  async ( range:IPostRange, { dispatch }) => {
+    try {
+      const res = await findForRangeDate( range );
+      return res as unknown as IPost[];
+    } catch ( e:any ) {
+      const { ...rest } = e;
+      if ( rest.response.data.message === 'Token not valid' ) {
+        console.log( 'Token not valid' );
+        Cookies.remove( 'token' );
+        dispatch( getToken( ));
+      }
     }
   });

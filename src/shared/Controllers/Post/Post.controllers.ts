@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { ICreatePost } from '../../../Module/Home/interface/interface';
+import { IPostRange } from '../../../Module/PostRander/Interface/Interface';
 import { IPost, IUpdatePost } from '../../Interface/rest.interface';
 
 const api = 'https://blogsumifru.herokuapp.com';
@@ -77,6 +78,16 @@ export const updatePost = async ( data:IUpdatePost ) => {
 export const findByEmailOrNameOrTitle = async ( data:string ) => {
   const token = Cookies.get( 'token' );
   const res = await axios.get( `${api}/post-blog/${data}/title`, {
+    headers: {
+      authorization: `${token}`,
+    },
+  });
+  return res.data;
+};
+
+export const findForRangeDate = async ( range:IPostRange ) => {
+  const token = Cookies.get( 'token' );
+  const res = await axios.get( `${api}/post-blog/range/${range.start}/${range.end}`, {
     headers: {
       authorization: `${token}`,
     },
