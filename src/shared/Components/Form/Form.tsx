@@ -83,6 +83,12 @@ export const FormCreatePost = () => {
           setFieldValue( 'body', text.replace( element, `<blockquote>${element.trim()}</blockquote> ` ));
         }
         break;
+      case 'img':
+        if ( element ) {
+          const text = values.body;
+          setFieldValue( 'body', text.replace( element, `<img src="${element.trim()}" alt=""> ` ));
+        }
+        break;
       default:
         return '';
     }
@@ -110,7 +116,7 @@ export const FormCreatePost = () => {
             label="Multiline"
             multiline
             minRows={3}
-            maxRows={4}
+            maxRows={6}
             {...getFieldProps( 'body' )}
             error={!!errors.body && touched.body}
             helperText={touched.body && errors.body}
@@ -119,6 +125,9 @@ export const FormCreatePost = () => {
         <ButtonGroup variant="outlined">
           <Button onClick={() => handleSelect( 'B', window.getSelection()?.toString())}>
             <b>B</b>
+          </Button>
+          <Button onClick={() => handleSelect( 'img', window.getSelection()?.toString())}>
+            <b>img</b>
           </Button>
           <Button onClick={() => handleSelect( 'I', window.getSelection()?.toString())}>
             <i>C</i>

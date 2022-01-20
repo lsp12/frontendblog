@@ -86,6 +86,12 @@ export const CreateComentState = ({ postBlogId }:IComentProps ) => {
           setFieldValue( 'comment', text.replace( element, `<blockquote>${element.trim()}</blockquote> ` ));
         }
         break;
+      case 'img':
+        if ( element ) {
+          const text = values.comment;
+          setFieldValue( 'comment', text.replace( element, `<img src="${element.trim()}" alt=""> ` ));
+        }
+        break;
       default:
         return '';
     }
@@ -109,6 +115,9 @@ export const CreateComentState = ({ postBlogId }:IComentProps ) => {
         <ButtonGroup variant="outlined">
           <Button onClick={() => handleSelect( 'B', window.getSelection()?.toString())}>
             <b>B</b>
+          </Button>
+          <Button onClick={() => handleSelect( 'img', window.getSelection()?.toString())}>
+            <b>img</b>
           </Button>
           <Button onClick={() => handleSelect( 'I', window.getSelection()?.toString())}>
             <i>C</i>
