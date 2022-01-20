@@ -14,6 +14,7 @@ import { Home } from '../Module/Home/view/Home';
 import { ViewPost } from '../Module/viewPost/view/ViewPost';
 import { useAppSelector } from '../shared/Store/Hook';
 import { PostRange } from '../Module/PostRander/view/PostRange';
+import { RecoverKey } from '../Module/RecoverKey/View/RecoverKey';
 
 const AppRouter = () => {
   const { authethicated } = useAppSelector(( state ) => state.authSlice );
@@ -30,6 +31,7 @@ const AppRouter = () => {
             <Route path="*" element={<Navigate to="login" />} />
           </>
         ) }
+        <Route path="/recovery" element={<RecoverKey />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="/range" element={<PostRange />} />

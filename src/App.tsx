@@ -14,7 +14,9 @@ function App() {
   const token = Cookies.get( 'token' );
   useEffect(() => {
     dispatch( getToken());
-    dispatch( userReducer());
+    if ( token ) {
+      dispatch( userReducer());
+    }
   }, [dispatch, token, authethicated]);
 
   moment.locale( 'es' );
